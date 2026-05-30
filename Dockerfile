@@ -1,4 +1,5 @@
 FROM python:3.9-slim
+RUN apt-get update && apt-get install -y ffmpeg
 
 # Install system dependencies (FFmpeg and default basic fonts for video subtitles)
 RUN apt-get update && apt-get install -y \
