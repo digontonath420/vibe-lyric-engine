@@ -21,9 +21,14 @@ function searchSong() {
     .then(res => res.json())
     .then(data => {
         loader.classList.add('hidden');
-        if (data.error) return alert('Error: ' + data.error);
-        if (!data.results || data.results.length === 0) return alert('No tracks found.');
-
+        if (data.error) {
+            alert('Error: ' + data.error);
+            return;
+        }
+        if (!data.results || data.results.length === 0) {
+            alert('No tracks found. Try different keywords.');
+            return;
+        }
         resultsContainer.classList.remove('hidden');
         data.results.forEach(track => {
             const item = document.createElement('div');
@@ -41,7 +46,7 @@ function searchSong() {
     })
     .catch(err => {
         loader.classList.add('hidden');
-        alert('Server failure or Timeout!');
+        alert('Network or server error. Please try again.');
         console.error(err);
     });
 }
@@ -71,15 +76,17 @@ function generateVideo(trackId, trackTitle) {
     .then(res => res.json())
     .then(data => {
         loader.classList.add('hidden');
-        if (data.error) return alert('Rendering failed: ' + data.error);
-
+        if (data.error) {
+            alert('Rendering failed: ' + data.error + (data.details ? '\n' + data.details : ''));
+            return;
+        }
         downloadContainer.classList.remove('hidden');
         document.getElementById('renderedTitle').innerText = `"${data.title}" processed with selected typography overlay.`;
         document.getElementById('downloadLink').href = data.download_url;
     })
     .catch(err => {
         loader.classList.add('hidden');
-        alert('Processing error or timeout on free tier node.');
+        alert('Processing error or timeout. Free tier node may be slow.');
         console.error(err);
     });
 }
