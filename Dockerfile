@@ -1,27 +1,24 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
-# Video aur lyrics ke liye saare zaroori tools install karenge
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     fontconfig \
     fonts-liberation \
+    fonts-noto-color-emoji \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Sabse pehle pip ko upgrade karenge taaki koi package error na de
-RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
-# Requirements copy karke install karenge
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Baaki saara code copy karenge
 COPY . .
 
-# Render ka port setup
+RUN mkdir -p downloads
+
 ENV PORT=5000
 EXPOSE 5000
 
-# Gunicorn command (120 seconds timeout ke sath)
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "1", "--threads", "8", "--timeout", "120", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:${PORT}", "--workers", "2", "--threads", "4", "--timeout", "180", "app:app"]
