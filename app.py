@@ -111,19 +111,14 @@ def generate_video():
     try:
         # 1. Download audio
         ydl_opts = get_ydl_opts({
-    'format': 'bestaudio*/best',
-    'extractor_args': {
-        'youtube': {
-            'player_client': ['android', 'web']
-        }
-    },
-    'outtmpl': os.path.join(UPLOAD_FOLDER, f"{session_id}.%(ext)s"),
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-        'preferredquality': '192'
-    }],
-})
+            'format': 'bestaudio[ext=m4a]/bestaudio[ext=mp3]/bestaudio/best',
+            'outtmpl': os.path.join(UPLOAD_FOLDER, f"{session_id}.%(ext)s"),
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192'
+            }],
+        })
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([f"https://youtu.be/{video_id}"])
 
