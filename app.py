@@ -2,7 +2,7 @@ import os
 import re
 import uuid
 import subprocess
-from flask import Flask, render_template, request, jsonify, send_from_file
+from flask import Flask, render_template, request, jsonify, send_from_directory
 import yt_dlp
 import syncedlyrics
 
@@ -162,7 +162,7 @@ def generate_video():
 
 @app.route('/download/<filename>')
 def download_file(filename):
-    return send_from_file(UPLOAD_FOLDER, filename, as_attachment=True)
+    return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=True)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
