@@ -17,7 +17,7 @@ UPLOAD_FOLDER = 'downloads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Cookies file ab mandatory nahi; agar tumhe zaroorat ho to valid file do
-COOKIES_FILE = None   # 'cookies.txt' place kar sakte ho agar valid ho
+COOKIES_FILE = 'cookies.txt'  # 'cookies.txt' place kar sakte ho agar valid ho
 
 def get_ydl_opts(extra_opts=None):
     opts = {
