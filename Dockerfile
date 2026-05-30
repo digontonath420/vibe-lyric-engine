@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-# System dependencies (FFmpeg, Fontconfig aur Fonts video lyrics ke liye)
+# Video aur lyrics ke liye saare zaroori tools install karenge
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     fontconfig \
@@ -9,14 +9,17 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Requirements copy karke packages install karenge
+# Sabse pehle pip ko upgrade karenge taaki koi package error na de
+RUN pip install --no-cache-dir --upgrade pip
+
+# Requirements copy karke install karenge
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Baaki saara project code copy karenge
+# Baaki saara code copy karenge
 COPY . .
 
-# Render ke liye port setup
+# Render ka port setup
 ENV PORT=5000
 EXPOSE 5000
 
