@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 # System dependencies (FFmpeg, Fontconfig aur Fonts video lyrics ke liye)
 RUN apt-get update && apt-get install -y \
@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Pehle requirements copy karke packages install karenge
+# Requirements copy karke packages install karenge
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -20,5 +20,5 @@ COPY . .
 ENV PORT=5000
 EXPOSE 5000
 
-# Gunicorn command (120 seconds timeout ke sath taaki video poori render ho sake)
+# Gunicorn command (120 seconds timeout ke sath)
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "1", "--threads", "8", "--timeout", "120", "app:app"]
