@@ -111,7 +111,7 @@ def generate_video():
     try:
         # 1. Download audio
         ydl_opts = get_ydl_opts({
-            'format': 'bestaudio/best',
+            'format': 'bestaudio[ext=m4a]/bestaudio[ext=mp3]/bestaudio/best',
             'outtmpl': os.path.join(UPLOAD_FOLDER, f"{session_id}.%(ext)s"),
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
