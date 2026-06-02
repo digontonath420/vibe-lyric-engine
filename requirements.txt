@@ -1,5 +1,0 @@
-Flask==3.0.3
-yt-dlp>=2025.05.22
-syncedlyrics>=0.3.5
-gunicorn==23.0.0
-Werkzeug==3.0.3
